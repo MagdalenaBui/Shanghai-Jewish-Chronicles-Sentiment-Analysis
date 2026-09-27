@@ -7,15 +7,14 @@ and topic analysis, as part of the Hausarbeit "Shanghai als Zufluchtsort
 
 ## Contents
 
-- `zeitungs_artikel_extraktion.ipynb` — OCR & article extraction
+- `OCR.ipynb` — OCR & article extraction
 - `sentiment_analyse.ipynb` — Sentiment analysis & topic modelling
-- `extract_articles.py` — standalone script version of the extraction logic
-- `process_csvs.py` — converts result CSVs into LaTeX tables for Overleaf
+
 
 ## Pipeline overview
 
 ```
-raw PDF  →  [1] zeitungs_artikel_extraktion.ipynb  →  articles_extracted.csv
+raw PDF  →  [1] OCR.ipynb  →  articles_extracted.csv
                                                               ↓
                                             [2] sentiment_analyse.ipynb
                                                               ↓
@@ -25,7 +24,7 @@ raw PDF  →  [1] zeitungs_artikel_extraktion.ipynb  →  articles_extracted.csv
 
 ---
 
-## 1. `zeitungs_artikel_extraktion.ipynb` – OCR & Article Extraction
+## 1. `OCR.ipynb` – OCR & Article Extraction
 
 **What it does:** Takes the scanned newspaper PDF and produces a clean CSV
 of individual articles (no advertisements), one row per article.
@@ -50,12 +49,6 @@ of individual articles (no advertisements), one row per article.
 **Output:** `articles_extracted.csv` with columns `source_file`,
 `pdf_page`, `year`, `month`, `lang`, `has_agency_marker`, `word_count`,
 `text`.
-
-**Note:** on macOS, `ThreadPoolExecutor` is used instead of
-`ProcessPoolExecutor` (spawn-based multiprocessing can't pickle
-notebook-defined functions) — safe here because Tesseract runs as an
-external subprocess and releases the GIL.
-
 ---
 
 ## 2. `sentiment_analyse.ipynb` – Sentiment Analysis & Topic Modelling
@@ -116,12 +109,6 @@ python -m spacy download en_core_web_sm
 Tesseract OCR must also be installed system-side with German+English
 language data (`deu`, `eng`).
 
-## Run order
-
-1. Run `zeitungs_artikel_extraktion.ipynb` end to end → produces
-   `articles_extracted.csv`.
-2. Run `sentiment_analyse.ipynb` end to end (Kernel → Restart & Run All),
-   pointing it at the CSV from step 1 and the NRC lexicon file.
 
 ## Notes / limitations
 
