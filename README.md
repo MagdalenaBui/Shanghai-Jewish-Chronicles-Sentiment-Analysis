@@ -1,1 +1,0 @@
-# Shanghai-Jewish-Chronicles-Sentiment-Analysis
